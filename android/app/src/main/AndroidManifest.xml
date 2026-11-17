@@ -1,6 +1,17 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="28" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" /> <!-- Android 14+ -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    
+    <!-- MANAGE_EXTERNAL_STORAGE requires tools namespace to suppress the warning -->
+    <uses-permission 
+        android:name="android.permission.MANAGE_EXTERNAL_STORAGE" 
+        tools:ignore="ScopedStorage" />
 
     <application
       android:name=".MainApplication"
@@ -11,6 +22,7 @@
       android:theme="@style/AppTheme"
       android:usesCleartextTraffic="${usesCleartextTraffic}"
       android:supportsRtl="true">
+      
       <activity
         android:name=".MainActivity"
         android:label="@string/app_name"
@@ -23,5 +35,10 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
       </activity>
+      
+      <service
+        android:name=".recovery.ScanService"
+        android:foregroundServiceType="dataSync"
+        android:exported="false" />
     </application>
 </manifest>

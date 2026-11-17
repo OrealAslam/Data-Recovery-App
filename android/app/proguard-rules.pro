@@ -8,3 +8,8 @@
 #   http://developer.android.com/guide/developing/tools/proguard.html
 
 # Add any project specific keep options here:
+
+
+# JNI bridge — names are resolved by native code via GetMethodID
+-keep class com.androidrecoveryapp.recovery.NativeCarver { *; }
+-keep class com.androidrecoveryapp.recovery.ScanProgressListener { *; }

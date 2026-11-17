@@ -1,3 +1,4 @@
+// android/app/build.gradle
 apply plugin: "com.android.application"
 apply plugin: "org.jetbrains.kotlin.android"
 apply plugin: "com.facebook.react"
@@ -84,6 +85,17 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+        externalNativeBuild {
+            cmake {
+                cppFlags "-std=c++17 -fexceptions -frtti"
+            }
+        }
+    }
+    externalNativeBuild {
+        cmake {
+            path "src/main/cpp/CMakeLists.txt"
+            version "3.22.1"
+        }
     }
     signingConfigs {
         debug {
@@ -110,6 +122,12 @@ android {
 dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
+
+    // ✅ Libsu for root access — CORRECTED COORDINATES
+    def libsuVersion = '5.0.5'  // or '5.3.0'
+    implementation "com.github.topjohnwu.libsu:core:${libsuVersion}"
+    implementation "com.github.topjohnwu.libsu:service:${libsuVersion}"
+    implementation "com.github.topjohnwu.libsu:nio:${libsuVersion}"
 
     if (hermesEnabled.toBoolean()) {
         implementation("com.facebook.react:hermes-android")
